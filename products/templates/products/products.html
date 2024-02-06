@@ -123,7 +123,7 @@
 
 
 {% block postloadjs %}
-    {{ block.super }}
+    {{ block.super }} <!-- Include the parent block content -->
     <script type="text/javascript">
         $('.btt-link').click(function(e){
             window.scrollTo({
@@ -137,23 +137,23 @@
 
     <script type="text/javascript">
         $("#sort-selector").change(function(){
-            var selector = $(this);
-            var currentUrl = new URL(window.location);
+            var selector = $(this); // get the selector
+            var currentUrl = new URL(window.location); // get the current url
 
-            var selectedVal = selector.val();
+            var selectedVal = selector.val(); // get the selected value
             if(selectedVal != "reset"){
-                var sort = selectedVal.split("_")[0];
-                var direction = selectedVal.split("_")[1];
+                var sort = selectedVal.split("_")[0]; // get the sort value
+                var direction = selectedVal.split("_")[1]; // get the direction value
 
-                currentUrl.searchParams.set("sort", sort);
-                currentUrl.searchParams.set("direction", direction);
+                currentUrl.searchParams.set("sort", sort); // set the sort parameter
+                currentUrl.searchParams.set("direction", direction); // set the direction parameter
 
-                window.location.replace(currentUrl);
+                window.location.replace(currentUrl); // redirect to the new url
             } else {
-                currentUrl.searchParams.delete("sort");
-                currentUrl.searchParams.delete("direction");
+                currentUrl.searchParams.delete("sort"); // delete the sort parameter
+                currentUrl.searchParams.delete("direction"); // delete the direction parameter
 
-                window.location.replace(currentUrl);
+                window.location.replace(currentUrl); // redirect to the new url
             }
         });
 
