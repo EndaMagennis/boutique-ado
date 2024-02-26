@@ -4,22 +4,20 @@
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
-            <div class="col">
-
-            </div>
+            <div class="col"></div>
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
-<div class="overlay"></div>
+    <div class="overlay"></div>
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
                 <h2 class="logo-font">Products</h2>
                 {% for c in current_categories %}
-                    <a href="{% url 'products' %}?category={{ c.name }}" class="category-badge text-decoration-none">
-                        <span class="p-2 mt-2 badge badge-white text-black rounded-0 border-dark">{{ c.friendly_name }}</span>
+                    <a class="category-badge text-decoration-none" href="{% url 'products' %}?category={{ c.name }}">
+                        <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ c.friendly_name }}</span>
                     </a>
                 {% endfor %}
                 <hr class="w-50 mb-1">
@@ -45,8 +43,8 @@
                     </div>
                     <div class="col-12 col-md-6 order-md-first">
                         <p class="text-muted mt-3 text-center text-md-left">
-                            {%if search_term or current_categories or current_sorting != 'None_None' %}
-                                <span class="small"><a href="{% url 'products' %}"></a> | </span>
+                            {% if search_term or current_categories or current_sorting != 'None_None' %}
+                                <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
                             {% endif %}
                             {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                         </p>
@@ -57,30 +55,30 @@
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                             <div class="card h-100 border-0">
                                 {% if product.image %}
-                                    <a href="{% url 'product_detail' product.id %}">
-                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid">
-                                    </a>
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                </a>
                                 {% else %}
-                                    <a href="{% url 'product_detail' product.id %}">
-                                        <img src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}" class="card-img-top img-fluid">
-                                    </a>
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                </a>
                                 {% endif %}
                                 <div class="card-body pb-0">
                                     <p class="mb-0">{{ product.name }}</p>
                                 </div>
-                                <div class="card-footer bg-white pt-0 boder-0 text-left">
+                                <div class="card-footer bg-white pt-0 border-0 text-left">
                                     <div class="row">
                                         <div class="col">
                                             <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
                                             {% if product.category %}
-                                                <p class="small mt-1 mb-0">
-                                                    <a href="{% url 'products' %}?category={{ product.category.name }}" class="text-muted">
-                                                        <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
-                                                    </a>
-                                                </p>
+                                            <p class="small mt-1 mb-0">
+                                                <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
+                                                    <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                                                </a>
+                                            </p>
                                             {% endif %}
                                             {% if product.rating %}
-                                                <small class="text-muted"><i class="fas fa-star mr1"></i>{{ product.rating }} / 5</small>
+                                                <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                                             {% else %}
                                                 <small class="text-muted">No Rating</small>
                                             {% endif %}
@@ -90,12 +88,12 @@
                             </div>
                         </div>
                         {% if forloop.counter|divisibleby:1 %}
-                        <div class="col-12 d-sm-none mb-5">
-                            <hr>
-                        </div>
-                        {% endif %}
+                            <div class="col-12 d-sm-none mb-5">
+                                <hr>
+                            </div>
+                        {% endif %}                        
                         {% if forloop.counter|divisibleby:2 %}
-                            <div class="col-12 d-none d-sm-block d-md block d-lg-none mb-5">
+                            <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
                                 <hr>
                             </div>
                         {% endif %}
@@ -115,47 +113,40 @@
         </div>
     </div>
     <div class="btt-button shadow-sm rounded-0 border border-black">
-        <a href="" class="btt-link d-flex h-100">
+        <a class="btt-link d-flex h-100">
             <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
-        </a>
+        </a>	
     </div>
-{% endblock content %}
-
+{% endblock %}
 
 {% block postloadjs %}
-    {{ block.super }} <!-- Include the parent block content -->
+    {{ block.super }}
     <script type="text/javascript">
-        $('.btt-link').click(function(e){
-            window.scrollTo({
-                'behavior': 'smooth',
-                'left': 0,
-                'top': 0
-            });
-        });
-
-    </script>
-
+		$('.btt-link').click(function(e) {
+			window.scrollTo(0,0)
+		})
+	</script>
+    
     <script type="text/javascript">
-        $("#sort-selector").change(function(){
-            var selector = $(this); // get the selector
-            var currentUrl = new URL(window.location); // get the current url
+        $('#sort-selector').change(function() {
+            var selector = $(this);
+            var currentUrl = new URL(window.location);
 
-            var selectedVal = selector.val(); // get the selected value
+            var selectedVal = selector.val();
             if(selectedVal != "reset"){
-                var sort = selectedVal.split("_")[0]; // get the sort value
-                var direction = selectedVal.split("_")[1]; // get the direction value
+                var sort = selectedVal.split("_")[0];
+                var direction = selectedVal.split("_")[1];
 
-                currentUrl.searchParams.set("sort", sort); // set the sort parameter
-                currentUrl.searchParams.set("direction", direction); // set the direction parameter
+                currentUrl.searchParams.set("sort", sort);
+                currentUrl.searchParams.set("direction", direction);
 
-                window.location.replace(currentUrl); // redirect to the new url
+                window.location.replace(currentUrl);
             } else {
-                currentUrl.searchParams.delete("sort"); // delete the sort parameter
-                currentUrl.searchParams.delete("direction"); // delete the direction parameter
+                currentUrl.searchParams.delete("sort");
+                currentUrl.searchParams.delete("direction");
 
-                window.location.replace(currentUrl); // redirect to the new url
+                window.location.replace(currentUrl);
             }
-        });
-
+        })
     </script>
-{% endblock postloadjs %}
+{% endblock %}
