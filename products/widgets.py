@@ -1,9 +1,6 @@
 from django.forms.widgets import ClearableFileInput
 from django.utils.translation import gettext_lazy as _
 
-# This class is a custom widget that inherits from ClearableFileInput
-# It overrides the default input type for file inputs and adds some custom styling
-# It also adds some custom text to the template that is used to render the widget
 
 class CustomClearableFileInput(ClearableFileInput):
     clear_checkbox_label = _('Remove')
