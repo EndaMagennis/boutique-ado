@@ -25,6 +25,7 @@ SECRET_KEY = 'p@ei#69*b*zz3u4yie-$()@cy^l(+x9&@6ypx+r0lm(3%_9hr7'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'boutique-ado-enda-b40d2ffb86ed.herokuapp.com',
     '*.herokuapp.com',
     'localhost'
 ]
